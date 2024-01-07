@@ -3,12 +3,7 @@
   </div>
 </template>
 
-<script>
-import { ref, defineComponent} from 'vue';
-
-export default defineComponent({
-  name: "Home",
-});
+<script lang="ts" setup>
 </script>
 
 <style lang="scss" scoped>

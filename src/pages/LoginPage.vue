@@ -18,26 +18,36 @@ async function loginEmailPassword(): Promise<void> {
 </script>
 
 <template>
-  <div class="app-login">
-    <div>email: <input id="email" v-model="email" type="text" label="Email"></div>
-    <div>password: <input id="password" v-model="password" type="text" label="Password"></div>
+  <div class="login-page">
+    <div class="login-page__input-container">
+      email: <input id="email" v-model="email" type="text" label="Email">
+    </div>
+    <div class="login-page__input-container">
+      password: <input id="password" v-model="password" type="text" label="Password">
+    </div>
 
-    <div>username is: qesandbox@gmail.com</div>
-    <div>password is: test123</div>
-    <button id="sign-in-button-manual" type="button" @click="loginEmailPassword">
+    <div class="login-page__info">
+      username is: qesandbox@gmail.com
+    </div>
+    <div class="login-page__info">
+      password is: test123
+    </div>
+    <button id="sign-in-button-manual" class="login-page__button" type="button" @click="loginEmailPassword">
       login with email and password
     </button>
   </div>
 </template>
 
-<style type="scss">
-.app-login {
-  hr {
-    margin: 20px 0 60px;
-  }
+<style>
+.login-page__input-container {
+  margin-bottom: 10px;
+}
 
-  button {
-    margin: 0 auto;
-  }
+.login-page__info {
+  margin-bottom: 20px;
+}
+
+.login-page__button {
+  margin: 0 auto;
 }
 </style>

@@ -30,30 +30,32 @@ onMounted(() => {
 
 <template>
   <div class="app-parent">
-    <div id="modal-target" />
-    <header>
-      <div><img class="app-parent--logo" src="@/assets/logo.png"> Prestige Financial Solutions</div>
+    <div id="modal-target" class="app-parent__modal-target" />
+    <header class="app-parent__header">
+      <div class="app-parent__header-logo">
+        <img src="@/assets/logo.png"> Prestige Financial Solutions
+      </div>
     </header>
 
-    <div id="sign-in-area" />
+    <div id="sign-in-area" class="app-parent__sign-in-area" />
 
-    <main v-if="mainStore.globalLoading" class="spinner">
+    <main v-if="mainStore.globalLoading" class="app-parent__spinner">
       <img src="@/assets/puff.svg">
     </main>
 
-    <main v-else class="column">
-      <div v-if="mainStore.currentUser">
+    <main v-else class="app-parent__main">
+      <div v-if="mainStore.currentUser" class="app-parent__current-user">
         currently logged in user: {{ mainStore.currentUser.email }}
       </div>
-      <router-view v-if="mainStore.currentUser" />
-      <LoginPage v-else />
+      <router-view v-if="mainStore.currentUser" class="app-parent__router-view" />
+      <LoginPage v-else class="app-parent__login-page" />
     </main>
 
-    <footer class="grow">
-      <div class="center">
+    <footer class="app-parent__footer">
+      <div class="app-parent__footer-center">
         &copy; Allocate Next Ventures
       </div>
-      <div class="links" />
+      <div class="app-parent__footer-links" />
     </footer>
   </div>
 </template>
@@ -73,7 +75,7 @@ body {
   max-height: 100%;
 }
 
-.spinner {
+.app-parent__spinner {
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -86,9 +88,11 @@ body {
   }
 }
 
-.app-parent--logo {
-  height: 40px;
-  margin-right: 10px;
+.app-parent__header-logo {
+  img {
+    height: 40px;
+    margin-right: 10px;
+  }
 }
 
 
@@ -125,18 +129,19 @@ body {
     max-width: 300px;
   }
 
-  main {
+  .app-parent__main {
     padding: 0;
     min-height: 100%;
     width: 100%;
     flex-grow: 1;
+    padding: 20px 40px;
   }
 
-  #modal-target {
+  .app-parent__modal-target {
     z-index: 100;
   }
 
-  header {
+  .app-parent__header {
     display: flex;
     align-self: flex-start;
     color: #07a4ff;
@@ -155,7 +160,7 @@ body {
     }
   }
 
-  footer {
+  .app-parent__footer {
     padding: 10px 10%;
     text-align: center;
     font-size: 14px;
@@ -168,7 +173,7 @@ body {
     border-top: 2px solid #eee;
     width: 100%;
 
-    .center {
+    .app-parent__footer-center {
       flex-grow: 1;
     }
 
@@ -176,7 +181,7 @@ body {
       opacity: 0.5;
     }
 
-    .links {
+    .app-parent__footer-links {
       justify-self: flex-end;
     }
   }

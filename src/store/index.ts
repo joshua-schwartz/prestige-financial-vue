@@ -1,37 +1,45 @@
 import { FirebaseApp } from 'firebase/app'
 import { getAuth, signInWithEmailAndPassword, signOut, User } from 'firebase/auth'
 import { defineStore } from 'pinia'
+import { ref } from 'vue'
 
 type LoginCredentials = {
   email: string,
   password: string,
 }
 
-export const useMainStore = defineStore('main', {
-  state: () => ({
-    isDevelopment: process.env.NODE_ENV !== 'production',
-    currentUser: null as User | null,
-    globalLoading: true,
-    firebase: null as FirebaseApp | null,
-  }),
-  actions: {
-    async loginEmailPass(val: LoginCredentials) {
-      if (!this.firebase) {
-        return
-      }
+export const useMainStore = defineStore('main', () => {
+  const isDevelopment = process.env.NODE_ENV !== 'production'
+  const currentUser = ref<User | null>(null)
+  const globalLoading = ref(true)
+  const firebase = ref<FirebaseApp | null>(null)
 
-      const auth = getAuth(this.firebase)
-      const userCredential = await signInWithEmailAndPassword(auth, val.email, val.password)
-      this.currentUser = userCredential.user
-    },
-    async logout() {
-      if (!this.firebase) {
-        return
-      }
+  async function loginEmailPass(val: LoginCredentials) {
+    if (!firebase.value) {
+      return
+    }
 
-      const auth = getAuth(this.firebase)
-      await signOut(auth)
-      this.currentUser = null
-    },
-  },
+    const auth = getAuth(firebase.value)
+    const userCredential = await signInWithEmailAndPassword(auth, val.email, val.password)
+    currentUser.value = userCredential.user
+  }
+
+  async function logout() {
+    if (!firebase.value) {
+      return
+    }
+
+    const auth = getAuth(firebase.value)
+    await signOut(auth)
+    currentUser.value = null
+  }
+
+  return {
+    isDevelopment,
+    currentUser,
+    globalLoading,
+    firebase,
+    loginEmailPass,
+    logout,
+  }
 })

@@ -1,12 +1,16 @@
-<template>
-    <div class="not-found">
-        <h1 class="not-found__title">404</h1>
-        <h2 class="not-found__subtitle">Not found</h2>
-    </div>
-</template>
-
 <script lang="ts" setup>
 </script>
+
+<template>
+  <div class="not-found">
+    <h1 class="not-found__title">
+      404
+    </h1>
+    <h2 class="not-found__subtitle">
+      Not found
+    </h2>
+  </div>
+</template>
 
 <style>
 .not-found {

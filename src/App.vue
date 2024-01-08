@@ -1,62 +1,64 @@
+<script lang="ts" setup>
+import { initializeApp } from 'firebase/app'
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
+import { onMounted } from 'vue'
+import LoginPage from '@/pages/LoginPage.vue'
+import { useMainStore } from '@/store'
+
+const mainStore = useMainStore()
+
+onMounted(() => {
+  const firebaseConfig = {
+    apiKey: import.meta.env.VITE_APP_FIREBASE_API_KEY,
+    authDomain: import.meta.env.VITE_APP_FIREBASE_AUTH_DOMAIN,
+  }
+
+  const firebaseApp = initializeApp(firebaseConfig)
+  mainStore.firebase = firebaseApp
+  const auth = getAuth(firebaseApp)
+
+  onAuthStateChanged(auth, (oauth) => {
+    mainStore.currentUser = oauth
+    mainStore.globalLoading = false
+  })
+
+  setTimeout(() => {
+    mainStore.globalLoading = false
+  }, 5000)
+})
+</script>
+
 <template>
   <div class="app-parent">
-    <div id="modal-target"></div>
+    <div id="modal-target" />
     <header>
-      <div>Prestige Financial Solutions</div>
+      <div><img class="app-parent--logo" src="@/assets/logo.png"> Prestige Financial Solutions</div>
     </header>
 
-    <div id="sign-in-area"></div>
+    <div id="sign-in-area" />
 
-    <main class="spinner" v-if="mainStore.globalLoading">
-      <img src="@/assets/puff.svg" />
+    <main v-if="mainStore.globalLoading" class="spinner">
+      <img src="@/assets/puff.svg">
     </main>
 
-    <main class="column" v-else>
+    <main v-else class="column">
       <div v-if="mainStore.currentUser">
         currently logged in user: {{ mainStore.currentUser.email }}
       </div>
       <router-view v-if="mainStore.currentUser" />
-      <Login v-else></Login>
+      <LoginPage v-else />
     </main>
 
     <footer class="grow">
-      <div class="center">&copy; Allocate Next Ventures</div>
-      <div class="links"></div>
+      <div class="center">
+        &copy; Allocate Next Ventures
+      </div>
+      <div class="links" />
     </footer>
   </div>
 </template>
 
-<script lang="ts" setup>
-import { initializeApp } from 'firebase/app';
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { useMainStore } from "./store";
-import Login from "./pages/Login.vue";
-import { onMounted } from "vue";
-
-const mainStore = useMainStore();
-
-onMounted(async () => {
-  var firebaseConfig = {
-    apiKey: import.meta.env.VITE_APP_FIREBASE_API_KEY,
-    authDomain: import.meta.env.VITE_APP_FIREBASE_AUTH_DOMAIN,
-  };
-
-  const firebaseApp = initializeApp(firebaseConfig);
-  mainStore.firebase = firebaseApp;
-  const auth = getAuth(firebaseApp);
-
-  onAuthStateChanged(auth, (oauth) => {
-    mainStore.currentUser = oauth;
-    mainStore.globalLoading = false;
-  });
-
-  setTimeout(() => {
-    mainStore.globalLoading = false;
-  }, 5000);
-});
-</script>
-
-<style lang="scss">
+<style type="scss">
 @import url(sanitize.css);
 
 body {
@@ -82,6 +84,11 @@ body {
   img {
     height: 100px;
   }
+}
+
+.app-parent--logo {
+  height: 40px;
+  margin-right: 10px;
 }
 
 

@@ -1,12 +1,11 @@
+
 <template>
   <div class="home-container">
+    Home
   </div>
 </template>
 
-<script lang="ts" setup>
-</script>
-
-<style lang="scss" scoped>
+<style type="scss" scoped>
 .home-container {
   background-color: white;
 }

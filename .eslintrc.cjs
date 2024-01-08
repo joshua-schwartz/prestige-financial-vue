@@ -120,7 +120,6 @@ module.exports = {
     'vue/arrow-spacing': 'warn',
     'vue/attribute-hyphenation': 'warn',
     'vue/attributes-order': 'warn',
-    'vue/block-lang': ['warn', { script: { lang: 'ts' }, style: { lang: ['css'] } }],
     'vue/block-tag-newline': 'warn',
     'vue/brace-style': ['warn', '1tbs'],
     'vue/camelcase': 'warn',

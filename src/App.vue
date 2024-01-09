@@ -60,7 +60,7 @@ onMounted(() => {
   </div>
 </template>
 
-<style type="scss">
+<style lang="scss">
 @import url(sanitize.css);
 
 body {

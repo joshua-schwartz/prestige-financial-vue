@@ -74,7 +74,6 @@ module.exports = {
     'spaced-comment': ['warn', 'always', { 'markers': ['/'] }],
     'switch-colon-spacing': 'warn',
 
-    '@typescript-eslint/array-type': 'warn',
     '@typescript-eslint/brace-style': ['warn', '1tbs'],
     '@typescript-eslint/class-literal-property-style': 'warn',
     '@typescript-eslint/comma-dangle': ['warn', { arrays: 'always-multiline', objects: 'always-multiline', imports: 'never', exports: 'never', functions: 'always-multiline' }],

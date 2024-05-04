@@ -35,6 +35,9 @@ onMounted(() => {
       <div class="app-parent__header-logo">
         <img src="@/assets/logo.png"> Prestige Financial Solutions
       </div>
+      <button v-if="!!mainStore.currentUser" class="logout-btn">
+        Log Out
+      </button>
     </header>
 
     <div id="sign-in-area" class="app-parent__sign-in-area" />
@@ -48,7 +51,7 @@ onMounted(() => {
         currently logged in user: {{ mainStore.currentUser.email }}
       </div>
       <router-view v-if="mainStore.currentUser" class="app-parent__router-view" />
-      <LoginPage v-else class="app-parent__login-page" />
+      <LoginPage v-if="!mainStore.currentUser" class="app-parent__login-page" />
     </main>
 
     <footer class="app-parent__footer">
@@ -62,48 +65,17 @@ onMounted(() => {
 
 <style lang="scss">
 @import url(sanitize.css);
-
 body {
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  font-family: "Roboto", sans-serif;
-  padding: 0;
-  margin: 0;
-  min-height: 100%;
-  max-height: 100%;
-}
-
-.app-parent__spinner {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  flex-grow: 1;
-
-  img {
-    height: 100px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    font-family: "Roboto", sans-serif;
+    padding: 0;
+    margin: 0;
+    min-height: 100%;
+    max-height: 100%;
   }
-}
-
-.app-parent__header-logo {
-  img {
-    height: 40px;
-    margin-right: 10px;
-  }
-}
-
-
-.app-parent {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  flex-grow: 1;
-  width: 100%;
-}
 
 #app {
   -webkit-font-smoothing: antialiased;
@@ -129,16 +101,30 @@ body {
     max-width: 300px;
   }
 
-  .app-parent__main {
-    padding: 0;
-    min-height: 100%;
-    width: 100%;
-    flex-grow: 1;
-    padding: 20px 40px;
-  }
-
   .app-parent__modal-target {
     z-index: 100;
+  }
+
+  .app-parent {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-grow: 1;
+    width: 100%;
+  }
+
+  .app-parent__spinner {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+
+    img {
+      height: 100px;
+    }
   }
 
   .app-parent__header {
@@ -148,8 +134,10 @@ body {
     font-size: 48px;
     background-color: #202a37;
     width: 100%;
-    padding: 0 80px;
+    padding: 8px 80px;
     min-width: 100%;
+    align-items: center;
+    justify-content: space-between;
 
     em {
       color: white;
@@ -158,6 +146,32 @@ body {
       font-size: 20px;
       line-height: 23px;
     }
+
+    .app-parent__header-logo {
+      display: flex;
+      align-items: center;
+      font-size: 24px;
+      line-height: 1em;
+      padding: 0 16px 0 0;
+
+      img {
+        height: 32px;
+        margin-right: 16px;
+      }
+    }
+  }
+
+  .app-parent__main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0;
+    min-height: 100%;
+    width: 100%;
+    flex-grow: 1;
+    padding: 20px 40px;
+    background-color: #fff;
   }
 
   .app-parent__footer {

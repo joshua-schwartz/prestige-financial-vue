@@ -1,12 +1,6 @@
 <script setup lang="ts">
-defineProps<{ items: Array<{
-  date: string,
-  open: string | number,
-  high: string | number,
-  low: string | number,
-  close: string | number,
-  volume: string | number,
-}>, }>()
+import { ITimeSeriesDataItem } from '@/api/getTimeSeries'
+defineProps<{ items: Array<ITimeSeriesDataItem> }>()
 </script>
 
 <template>
@@ -36,8 +30,14 @@ defineProps<{ items: Array<{
 
 <style lang="scss">
 .time-series-table {
-    th, td {
-        padding: 2px 40px 2px 0;
-    }
+  width: 100%;
+
+  tr {
+    padding: 2px 0;
+  }
+
+  th, td {
+    padding: 0;
+  }
 }
 </style>

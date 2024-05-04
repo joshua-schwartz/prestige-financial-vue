@@ -38,7 +38,13 @@ async function loginEmailPassword(): Promise<void> {
   </div>
 </template>
 
-<style>
+<style type="scss" scoped>
+.login-page {
+  background-color: #f2f2f2;
+  padding: 40px;
+  border-radius: 6px;
+}
+
 .login-page__input-container {
   margin-bottom: 10px;
 }

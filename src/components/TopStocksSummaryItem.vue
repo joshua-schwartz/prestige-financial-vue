@@ -1,5 +1,9 @@
 <script setup lang="ts">
-defineProps<{ label: string, value: number }>()
+defineProps<{ label: string, value: number | string }>()
+
+function formatCurrency(amount: number): string {
+  return new Intl.NumberFormat().format(amount)
+}
 </script>
 
 <template>
@@ -8,7 +12,7 @@ defineProps<{ label: string, value: number }>()
       {{ label }}
     </div>
     <div class="top-stocks-summary-item__value">
-      {{ `$${value}`.toLocaleString() }}
+      {{ typeof value === 'number' ? `$${formatCurrency(value)}` : value.toLocaleString() }}
     </div>
   </div>
 </template>

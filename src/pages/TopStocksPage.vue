@@ -4,19 +4,19 @@ import { getTopStocks } from '@/api/getTopStocks'
 import TopStocksItem from '@/components/TopStocksItem.vue'
 import TopStocksSummaryItem from '@/components/TopStocksSummaryItem.vue'
 
-const topStocks = ref(null)
-const totalMarketCap = getKeySum('market_cap')
+const topStocks = ref<unknown | null>(null)
 const minPriceFilter = ref(0)
 
 function getKeySum(key: string): number {
   return topStocks.value.reduce((acc, cur) => {
-    return acc + cur[key]
+    const curVal = cur[key] ?? 0
+    return acc + curVal
   }, 0)
 }
 
-function getOldestAndNewestIPOs(): string {
+function getOldestAndNewestIPOs(): string[] {
   const stocksSorted = topStocks.value.toSorted((a, b) => {
-    return a.ipo.getTime() - b.ipo.getTime()
+    return new Date(a.ipo).getTime() - new Date(b.ipo).getTime()
   }) ?? []
 
   const first = stocksSorted[0].ipo
@@ -32,7 +32,7 @@ onBeforeMount(() => {
 </script>
 
 <template>
-  <div class="top-stocks-page">
+  <div v-if="topStocks" class="top-stocks-page">
     <div class="top-stocks-page__filters">
       <div class="top-stocks-page__filters-header">
         <div class="top-stocks-page__filters-header-title">
@@ -49,7 +49,7 @@ onBeforeMount(() => {
     </div>
     <div class="top-stocks-page__summary">
       <TopStocksSummaryItem label="Total Volume" :value="getKeySum('volume')" />
-      <TopStocksSummaryItem :value="totalMarketCap" />
+      <TopStocksSummaryItem label="Total Market Cap" :value="getKeySum('market_cap')" />
       <TopStocksSummaryItem label="Average Stock Price" :value="getKeySum('price') / topStocks?.length" />
       <TopStocksSummaryItem label="Oldest IPO" :value="getOldestAndNewestIPOs()[0]" />
       <TopStocksSummaryItem label="Newest IPO" :value="getOldestAndNewestIPOs()[1]" />
